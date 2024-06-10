@@ -1,4 +1,4 @@
-# React TypeScript Redux-toolkit Redux Persist OOP, MUI 
+# React TypeScript Redux-toolkit Redux Persist OOP, Tailwind, MUI 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
