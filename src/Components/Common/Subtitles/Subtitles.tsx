@@ -1,4 +1,5 @@
 import React from 'react'
+import {memo} from 'react'
 import {NavLink, Link} from 'react-router-dom'
 
 interface IData {
@@ -9,7 +10,7 @@ interface IData {
 
 
 
-const Subtitles = ({ title, btnTitle, pathText }: IData) => {
+const Subtitles = memo(({ title, btnTitle, pathText }: IData) => {
   return (
     <div className="flex items-center justify-between pb-2">
 
@@ -23,7 +24,7 @@ const Subtitles = ({ title, btnTitle, pathText }: IData) => {
 
       <div className="sub-title">{title}</div>
     </div>
-  )
-}
-
+   )
+ }
+);
 export default Subtitles

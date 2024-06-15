@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 import actGetCategories from "./thunk-act/actGetCategories"
 import {TLoading} from "../../Types/Shared"
 import {TCategory} from "../../Types/category"
+import isString from "../../Types/guards"
 
 
 
@@ -24,7 +25,13 @@ const initialState: ICategoriesState = {
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {},
+  reducers: {
+    cleanUpProductsRecords: (state) => {
+      state.records = [];
+    }
+  },
+  
+  
   extraReducers: (builder) => {
     builder.addCase(actGetCategories.pending, (state) => {
       state.loading = "pending";
@@ -36,7 +43,7 @@ const categoriesSlice = createSlice({
     });
     builder.addCase(actGetCategories.rejected, (state, action) => {
       state.loading = "failed";
-      if (action.payload && typeof action.payload === "string") {
+      if (isString(action.payload)) {
         state.error = action.payload;
       }
     });
@@ -46,4 +53,5 @@ const categoriesSlice = createSlice({
 
 
 export {actGetCategories};
+export const {cleanUpProductsRecords} = categoriesSlice.actions;
 export default categoriesSlice.reducer;

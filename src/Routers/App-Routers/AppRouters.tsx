@@ -1,14 +1,18 @@
 import React from 'react'
+import {lazy, Suspense} from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // layouts
-import MainLayout from '../../Layouts/Main-Layout/MainLayout'
-import Home from '../../Pages/Home/Home'
-import Products from '../../Pages/Products/Products'
-import Cart from '../../Pages/Cart/Cart'
-import Categories from '../../Pages/Categories/Categories'
-import Profile from '../../Pages/User-Auth/Profile/Profile'
-import Login from '../../Pages/User-Auth/Login/Login'
-import Register from '../../Pages/User-Auth/Register/Register'
+const MainLayout = lazy(() => import('../../Layouts/Main-Layout/MainLayout'));
+const Home = lazy(() => import('../../Pages/Home/Home'));
+const Products = lazy(() => import('../../Pages/Products/Products'));
+const Cart = lazy(() => import('../../Pages/Cart/Cart'));
+const Wishlist = lazy(() => import('../../Pages/Wishlist/Wishlist'));
+const Categories = lazy(() => import('../../Pages/Categories/Categories'));
+const Profile = lazy(() => import('../../Pages/User-Auth/Profile/Profile'));
+const Login = lazy(() => import('../../Pages/User-Auth/Login/Login'));
+const Register = lazy(() => import('../../Pages/User-Auth/Register/Register'));
+
+
 import Error from '../../Pages/Error/Error'
 
 
@@ -16,7 +20,10 @@ import Error from '../../Pages/Error/Error'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: 
+      <Suspense fallback="loading please wait..">
+        <MainLayout />
+      </Suspense>,
     errorElement: <Error />,
     children: [
       {
@@ -27,29 +34,57 @@ const router = createBrowserRouter([
       
       {
         path: "categories",
-        element: <Categories />,
+        element: 
+          <Suspense fallback="loading please wait..">
+          <Categories />
+      </Suspense>,
+        
       },
       
       {
         path: "cart",
-        element: <Cart />,
+        element:
+          <Suspense fallback="loading please wait..">
+          <Cart />
+          </Suspense>,
+        
       },
       
       
       
       {
         path: "profile",
-        element: <Profile />,
+        element: 
+          <Suspense fallback="loading please wait..">
+           <Profile />
+          </Suspense>,
+       
+      },
+      
+      {
+        path: "wishlist",
+        element:
+          <Suspense fallback="loading please wait..">
+           <Wishlist />
+          </Suspense>,
+        
       },
       
       {
         path: "login",
-        element: <Login />,
+        element: 
+           <Suspense fallback="loading please wait..">
+           <Login />
+          </Suspense>,
       },
       
       {
         path: "register",
-        element: <Register />,
+        element:
+          <Suspense fallback="loading please wait..">
+           <Register />
+          </Suspense>,
+        
       },
       
       {

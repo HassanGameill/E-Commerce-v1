@@ -3,6 +3,7 @@ import {NavLink, Link} from 'react-router-dom'
 import style from './style.module.css'
 const {cart_badge} = style;
 import BasketCart from '../../../Ecommerce/BasketCart/BasketCart'
+import Wishlist from '../../../Ecommerce/Wishlist/Wishlist'
 
 
 interface MenuType {
@@ -20,22 +21,28 @@ const Menu: MenuType[] = [
   
   {
     name: 'Products',
-    path: "products",
+    path: "categories",
     icon: <i className="ri-t-shirt-air-fill"></i>,
   },
   
   
   
   {
-    name: 'Profile',
-    path: 'profile',
-    icon: <i className="ri-user-line"></i>,
+    name: 'Wishlist',
+    path: 'wishlist',
+    icon: <Wishlist cart_badge={cart_badge}/>,
   },
   
   {
     name: 'Cart',
     path: 'cart',
     icon: <BasketCart cart_badge={cart_badge}/>,
+  },
+  
+  {
+    name: 'Profile',
+    path: 'profile',
+    icon: <i className="ri-user-line"></i>,
   },
 ]
 

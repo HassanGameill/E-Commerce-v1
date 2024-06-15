@@ -9,7 +9,10 @@ import { addToCart } from "../../../RTK-STORE/cart/cartSlice";
 import {getCartTotalQuantitySelector} from "../../../RTK-STORE/cart/Selectors/Selector"; 
 
 
-const BasketCart = ({cart_badge}: any) => {
+
+
+
+const BasketCart = ({cart_badge}: React.ReactNode) => {
   const [isAnimate, setIsAnimate] = useState(false)
   
   const totalQuantity = useAppSelector(
@@ -38,9 +41,11 @@ const BasketCart = ({cart_badge}: any) => {
   return (
     <div className="relative">
        <i className="ri-shopping-cart-line"></i>
-      <span className={`${quantityStile}`}>
+      {
+        totalQuantity > 0 ? <span className={`${quantityStile}`}>
       {totalQuantity}
-      </span>
+      </span> : null
+      }
     </div>
       
   )

@@ -19,7 +19,7 @@ const GridList = <T extends HasId>({records, renderItem}: GridListProps<T>) => {
            {renderItem(itemData)}
           </div>
         ))
-      : "there are no records";
+      : "There is no Products";
       
       
   return (

@@ -1,23 +1,35 @@
 import React from 'react'
+// <i class="ri-heart-3-fill"></i>
 import {useEffect, useState, memo} from 'react'
 import {Link} from 'react-router-dom'
 import {TProducts} from "../../../Types/products"
 import {useAppDispatch, useAppSelector} from '../../../RTK-STORE/hooks'
 import { addToCart } from "../../../RTK-STORE/cart/cartSlice";
+import { actLikeToggle } from "../../../RTK-STORE/wishlistLike/wishlistSlice";
+
 
 // removw import { Spinner } from "flowbite-react";
 
 import ButtonLoader from '../../Ecommerce/ButtonLoading/ButtonLoading'
 
+
+
+
+
 const ProductCard = memo((itemData: TProducts) => {
   const dispatch = useAppDispatch()
   
   // Send Data Cart
-  const {id,  img, title, price, cat_prefix , max, quantity} = itemData;
-  
+  const {id,  img, title, price, cat_prefix , max, quantity, isLiked} = itemData;
+  console.log("products Fire...")
+  // cart items
   const cart = useAppSelector((state) => state.cart)
   
+
+  
+  
   const [isBtnDisabled, setIsBtnDisabled] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   
   
   
@@ -40,14 +52,34 @@ const ProductCard = memo((itemData: TProducts) => {
   
   // Add To Cart 
   const addToCartHandler = () => {
-    
     dispatch(addToCart(id))
     setIsBtnDisabled(true)
   }
   
+
+
+  // Wishlist Like Handle Toggle
+  const LikeToggleHandler = () => {
+    // if loading like dont make like for another product for that isLoading false... 
+    if (!isLoading) {
+    setIsLoading(true)
+    dispatch(actLikeToggle(id)).unwrap().then(() => setIsLoading(false)).catch(() => setIsLoading(false))
+    }
+  }
+  
   
   return (
-    <div className=" flex flex-col justify-center gap-3 items-start   bg-white rounded-3xl shadow-md">
+    <div className=" flex flex-col justify-center gap-3 items-start   bg-white rounded-3xl shadow-md relative">
+    
+      <span className={`absolute top-[12px] right-[12px] w-[28px] h-[28px] text-2xl flex flex-col items-center justify-center rounded-[5px] cursor-pointer bg-white shadow-2xl rounded-md text-red-600`} onClick={LikeToggleHandler} >
+      
+        {
+         isLoading ? <ButtonLoader>
+         <i className="ri-heart-3-fill text-[10px]"></i>
+         </ButtonLoader>: isLiked  ? <i className="ri-heart-3-fill"></i> : <i className="ri-heart-3-line"></i> 
+        }
+        
+      </span>
   
       <div className="cursor-pointer container py-1 my-auto px-1 mx-auto ">
         <img src={img} alt="" className="w-[480px] h-[250px] rounded-3xl"/>
@@ -73,7 +105,9 @@ const ProductCard = memo((itemData: TProducts) => {
         
         {
           isBtnDisabled ? <button className="flex items-center justify-center bg-blue-100 px-2 py-1.5 gap-2 text-[15px] text-black rounded-md overflow-hidden">
-          <ButtonLoader />
+          <ButtonLoader >
+            <i className="ri-shopping-cart-line"></i>
+          </ButtonLoader >
           
           </button> : <button className={` px-2 py-2 text-[14px] text-white rounded-md transform hover:scale-105 transition-transform duration-300 mt-2  overflow-hidden ${quantityReachedToMax ? "bg-gray-400"  :  "bg-slate-900" }`}
         onClick={addToCartHandler}

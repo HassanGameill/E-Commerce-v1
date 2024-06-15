@@ -7,6 +7,7 @@ import {
 
 import {RootState} from "../store"
 import {TLoading} from "../../Types/Shared"
+import isString from "../../Types/guards"
 
 
 
@@ -52,6 +53,10 @@ const cartSlice = createSlice({
       );
     },
     
+    cleanCartProductsFullInfo: (state) => {
+      state.productsFullInfo = [];
+    }
+    
   },
   
   extraReducers: (builder) => {
@@ -65,7 +70,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(addGetProductsByItems.rejected, (state, action) => {
       state.loading = "failed";
-      if (action.payload && typeof action.payload === "string") {
+      if (isString(action.payload)) {
         state.error = action.payload;
       }
     });
@@ -82,5 +87,5 @@ export {
 };
 
 
-export const {addToCart, cartItemsChangeQuantity, cartItemRemove} = cartSlice.actions;
+export const {addToCart, cartItemsChangeQuantity, cartItemRemove, cleanCartProductsFullInfo} = cartSlice.actions;
 export default cartSlice.reducer;

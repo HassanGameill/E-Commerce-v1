@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 import actGetProductsByCatPrefix from "../products/thunk-act/actGetProductsByCatPrefix"
 import {TLoading} from "../../Types/Shared"
 import {TProducts} from "../../Types/products"
+import isString from "../../Types/guards"
 
 
 
@@ -23,7 +24,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    productsCleanUp: (state) => {
+    cleanUpProductsRecords: (state) => {
       state.records = [];
     },
   },
@@ -39,7 +40,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(actGetProductsByCatPrefix.rejected, (state, action) => {
       state.loading = "failed";
-      if (action.payload && typeof action.payload === "string") {
+      if (isString(action.payload)) {
         state.error = action.payload;
       }
     })
@@ -48,6 +49,6 @@ const productsSlice = createSlice({
 });
 
 
-export const { productsCleanUp } = productsSlice.actions;
+export const { cleanUpProductsRecords } = productsSlice.actions;
 export {actGetProductsByCatPrefix};
 export default productsSlice.reducer;

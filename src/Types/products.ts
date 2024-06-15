@@ -7,5 +7,7 @@ export type TProducts = {
   img: string ;
   price: number ;
   quantity?: number ;
+  max: number ;
+  isLiked?: boolean ;
   
 };
